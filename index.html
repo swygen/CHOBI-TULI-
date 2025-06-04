@@ -265,13 +265,13 @@
       <img src="https://i.postimg.cc/DmkhR1CB/20250602-153823.png" alt="Menu Logo">
       <span>Chobi Tuli</span>
     </div>
-    <a href="faq.html" class="menu-item">
+    <a href="https://example.com/faq" class="menu-item">
       <span class="material-symbols-outlined">help</span> FAQ
     </a>
-    <a href="police.html" class="menu-item">
+    <a href="https://example.com/privacy" class="menu-item">
       <span class="material-symbols-outlined">lock</span> Privacy Policy
     </a>
-    <a href="developer.html" class="menu-item">
+    <a href="https://example.com/contact" class="menu-item">
       <span class="material-symbols-outlined">call</span> Developer Contact
     </a>
   </div>
@@ -290,155 +290,147 @@
 <!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ChobiTuli Stories</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CHOBI TULI Stories</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Segoe UI', sans-serif; background: #f7f7f7; }
-    .story-container {
-      display: flex;
-      overflow-x: auto;
-      padding: 10px;
-      gap: 10px;
-      background: #fff;
-    }
-    .story {
-      flex: 0 0 auto;
-      width: 90px;
-      height: 150px;
-      border-radius: 12px;
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-      border: 2px solid #e1e1e1;
-      background: #000;
-      transition: transform 0.2s;
-    }
-    .story:hover {
-      transform: scale(1.03);
-    }
-    .story img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .story span {
-      display: block;
-      text-align: center;
-      padding: 4px;
-      font-size: 13px;
-      background: #fff;
-      color: #333;
-    }.viewer {
+    body { font-family: 'Segoe UI', sans-serif; background: #f9f9f9; color: #333; }.story-container {
+  display: flex;
+  overflow-x: auto;
+  padding: 15px;
+  gap: 12px;
+  background: white;
+  scroll-snap-type: x mandatory;
+}
+
+.story {
+  flex: 0 0 auto;
+  width: 100px;
+  height: 200px;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid #ccc;
+  background-color: #000;
+  scroll-snap-align: start;
+}
+
+.story img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.story span {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0,0,0,0.6);
+  color: white;
+  font-size: 14px;
+  padding: 5px;
+  text-align: center;
+}
+
+.viewer {
   position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.95);
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.98);
   display: none;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  z-index: 999;
-}
-
-.viewer img {
-  max-width: 100%;
-  max-height: 80vh;
-  border-radius: 12px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.5);
-}
-
-.close-btn {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  width: 30px;
-  height: 30px;
-  background-image: url('https://cdn-icons-png.flaticon.com/512/1828/1828778.png');
-  background-size: cover;
-  cursor: pointer;
+  z-index: 1000;
+  padding: 20px;
 }
 
 .viewer-header {
-  position: absolute;
-  top: 20px;
-  left: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 10px;
+}
+
+.viewer-header .brand {
   display: flex;
   align-items: center;
   gap: 10px;
   color: white;
-}
-.viewer-header img {
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-}
-.viewer-header .name {
   font-weight: bold;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-.viewer-header .name img {
-  width: 15px;
-  height: 15px;
+  font-size: 18px;
 }
 
-.view-count {
-  color: #ccc;
-  font-size: 14px;
-  margin-top: 10px;
-  text-align: center;
-  font-weight: 500;
-  animation: fadeIn 0.5s ease;
+.viewer-header .brand img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.viewer-header .close-btn {
+  cursor: pointer;
+}
+
+.viewer img.story-img {
+  max-width: 100%;
+  max-height: 75vh;
+  border-radius: 15px;
+  margin-bottom: 20px;
 }
 
 .reactions {
   display: flex;
-  gap: 15px;
-  margin-top: 20px;
+  gap: 12px;
+  margin-top: 10px;
 }
+
 .reactions img {
   width: 35px;
   height: 35px;
   cursor: pointer;
   transition: transform 0.2s ease;
 }
+
 .reactions img:hover {
-  transform: scale(1.2);
+  transform: scale(1.3);
 }
 
-.reaction-fly {
-  position: fixed;
-  animation: flyUp 1s forwards;
-  z-index: 1000;
-  pointer-events: none;
+.view-count {
+  color: #FFFFFF;
+  font-size: 14px;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
 }
 
-@keyframes flyUp {
-  0% { opacity: 1; transform: translateY(0); }
-  100% { opacity: 0; transform: translateY(-100px); }
-}
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+@media (max-width: 600px) {
+  .story { width: 85px; height: 140px; }
+  .viewer-header .brand { font-size: 16px; }
+  .viewer img.story-img { max-height: 60vh; }
 }
 
   </style>
 </head>
 <body>  <div class="story-container" id="storyContainer"></div>  <div class="viewer" id="storyViewer">
-    <div class="close-btn" onclick="closeViewer()"></div>
     <div class="viewer-header">
-      <img src="https://i.postimg.cc/Hnx14P5b/20250602-153823.png" alt="Logo" />
-      <div class="name">CHOBI TULI <img src="https://cdn-icons-png.flaticon.com/512/1828/1828640.png" alt="Verified" /></div>
-    </div>
-    <img id="viewerImg" src="" alt="Story" />
-    <div class="view-count" id="viewCountText"></div>
-    <div class="reactions">
-      <img src="https://i.postimg.cc/wTCxhPmq/facebook-reactions.png" onclick="reactToStory('like', this)" />
-      <img src="https://i.postimg.cc/Fz1FZXpR/heart.png" onclick="reactToStory('love', this)" />
-      <img src="https://i.postimg.cc/GtZRx897/care.png" onclick="reactToStory('care', this)" />
-      <img src="https://i.postimg.cc/FKm96Lpw/wow.png" onclick="reactToStory('wow', this)" />
-    </div>
+      <div class="brand">
+        <img src="https://i.postimg.cc/Hnx14P5b/20250602-153823.png" alt="Logo" />
+        CHOBI TULI <img src="https://www.gstatic.com/images/icons/material/system/2x/verified_gm_blue_20dp.png" alt="Verified" style="width:16px;height:16px;">
+      </div>
+      <img src="https://www.gstatic.com/images/icons/material/system/2x/close_white_20dp.png" class="close-btn" onclick="closeViewer()" />
+    </div><img id="viewerImg" class="story-img" src="" alt="Story" />
+<div class="view-count" id="viewCountText">0 Views</div>
+
+<div class="reactions" id="reactionButtons">
+  <img src="https://i.postimg.cc/wTCxhPmq/facebook-reactions.png" onclick="reactToStory('like')" title="Like" />
+  <img src="https://i.postimg.cc/Fz1FZXpR/heart.png" onclick="reactToStory('love')" title="Love" />
+  <img src="https://i.postimg.cc/GtZRx897/care.png" onclick="reactToStory('care')" title="Care" />
+  <img src="https://i.postimg.cc/FKm96Lpw/wow.png" onclick="reactToStory('wow')" title="Wow" />
+</div>
+
   </div>  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>  <script>
     const firebaseConfig = {
       apiKey: "AIzaSyChZH6yY3nCIV-CXyQr0aTomBxy_V4HnKM",
@@ -469,7 +461,7 @@
     function openViewer(storyId, imgUrl, views) {
       viewer.style.display = 'flex';
       viewerImg.src = imgUrl;
-      viewCountText.textContent = formatCount(views) + ' views';
+      viewCountText.textContent = formatCount(views + 1) + ' Views';
       currentStoryId = storyId;
       db.collection("stories").doc(storyId).update({
         views: firebase.firestore.FieldValue.increment(1)
@@ -482,17 +474,11 @@
       currentStoryId = null;
     }
 
-    function reactToStory(type, el) {
+    function reactToStory(reaction) {
       if (!currentStoryId) return;
-      const storyRef = db.collection("stories").doc(currentStoryId);
-      storyRef.update({ [type]: firebase.firestore.FieldValue.increment(1) });
-      const flyIcon = el.cloneNode(true);
-      const rect = el.getBoundingClientRect();
-      flyIcon.className = 'reaction-fly';
-      flyIcon.style.left = rect.left + 'px';
-      flyIcon.style.top = rect.top + 'px';
-      document.body.appendChild(flyIcon);
-      setTimeout(() => flyIcon.remove(), 1000);
+      db.collection("stories").doc(currentStoryId).update({
+        [reaction]: firebase.firestore.FieldValue.increment(1)
+      });
     }
 
     function loadStories() {
@@ -502,7 +488,10 @@
           const data = doc.data();
           const story = document.createElement('div');
           story.className = "story";
-          story.innerHTML = `<img src="${data.imageUrl}" alt="Story"/><span>${data.title || ''}</span>`;
+          story.innerHTML = `
+            <img src="${data.imageUrl}" alt="Story" />
+            <span>${data.title || ''}</span>
+          `;
           story.addEventListener('click', () => openViewer(doc.id, data.imageUrl, data.views || 0));
           storyContainer.appendChild(story);
         });
