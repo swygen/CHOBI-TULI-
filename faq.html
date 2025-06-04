@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>গোলাকার লোডিং পপ-আপ</title>
+<style>
+  /* পুরো স্ক্রিন জুড়ে ফিক্সড পপ-আপ */
+  #smart-loader-popup {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+
+  /* পপ-আপের ভিতরের কন্টেনার */
+  #smart-loader-container {
+    position: relative;
+    width: 200px;
+    height: 200px;
+  }
+
+  #smart-loader-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%; /* গোলাকার */
+    display: block;
+  }
+
+  /* গোলাকার লোডিং বর্ডার অ্যানিমেশন */
+  #smart-loader-container::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: calc(100% + 20px);
+    height: calc(100% + 20px);
+    border-radius: 50%;
+    border: 5px solid transparent;
+    border-top-color: #007bff;
+    animation: spin 1.5s linear infinite;
+    pointer-events: none;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* ফেড আউট অ্যানিমেশন */
+  .fade-out {
+    animation: fadeOut 1s forwards;
+  }
+  @keyframes fadeOut {
+    to { opacity: 0; visibility: hidden; }
+  }
+</style>
+</head>
+<body>
+
+<div id="smart-loader-popup">
+  <div id="smart-loader-container">
+    <img src="https://i.imgur.com/7L1UxpC.jpeg" alt="লোডিং ছবি" />
+  </div>
+</div>
+
+<script>
+  setTimeout(() => {
+    const popup = document.getElementById('smart-loader-popup');
+    popup.classList.add('fade-out');
+  }, 6000);
+</script>
+
+</body>
+</html>
+<section class="premium-faq-section">
+  <h2>Frequently Asked Questions</h2>
+
+  <div class="faq-item">
+    <button class="faq-question">
+      <span>What is CHOBI TULI?</span>
+      <span class="material-icons faq-icon">add</span>
+    </button>
+    <div class="faq-answer">
+      <p>CHOBI TULI is a website dedicated to capturing the beauty of nature through photography.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question">
+      <span>How can I submit my photos?</span>
+      <span class="material-icons faq-icon">add</span>
+    </button>
+    <div class="faq-answer">
+      <p>You can submit your photos by contacting us through the contact page or emailing us directly.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question">
+      <span>Is photography equipment required?</span>
+      <span class="material-icons faq-icon">add</span>
+    </button>
+    <div class="faq-answer">
+      <p>Not necessarily, but having a good camera helps capture better quality images.</p>
+    </div>
+  </div>
+
+  <div class="developer-credit">
+    Developer By <a href="https://swygen.netlify.app/dashboard" target="_blank" rel="noopener noreferrer">Swygen</a>
+  </div>
+</section>
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+
+<style>
+  .premium-faq-section {
+    max-width: 720px;
+    margin: 3rem auto;
+    font-family: 'Poppins', sans-serif;
+    color: #222;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgb(0 0 0 / 0.1);
+    padding: 2rem 1.5rem 3rem; /* extra bottom padding for credit */
+  }
+
+  .premium-faq-section h2 {
+    text-align: center;
+    font-size: 2.75rem;
+    margin-bottom: 2rem;
+    color: #0b3d91;
+    font-weight: 900;
+    letter-spacing: 1px;
+  }
+
+  .faq-item {
+    border-bottom: 1px solid #eee;
+  }
+
+  .faq-question {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 1.25rem 1rem;
+    text-align: left;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #0b3d91;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s ease;
+    border-radius: 8px;
+  }
+
+  .faq-question:hover {
+    background-color: #f5f8ff;
+  }
+
+  .faq-icon {
+    font-size: 2.2rem;
+    color: #ff5722;
+    transition: transform 0.35s ease;
+  }
+
+  .faq-question.active .faq-icon {
+    transform: rotate(45deg);
+  }
+
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.45s ease;
+    padding: 0 1rem;
+    font-size: 1rem;
+    color: #444;
+    line-height: 1.5;
+  }
+
+  .faq-answer p {
+    margin: 1rem 0;
+  }
+
+  .developer-credit {
+    margin-top: 2.5rem;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #777;
+  }
+
+  .developer-credit a {
+    color: #0b3d91;
+    text-decoration: none;
+    font-weight: 700;
+    transition: color 0.3s ease;
+  }
+
+  .developer-credit a:hover {
+    color: #ff5722;
+    text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+    .premium-faq-section {
+      padding: 1.5rem 1rem 2.5rem;
+      max-width: 90vw;
+    }
+
+    .premium-faq-section h2 {
+      font-size: 2rem;
+    }
+
+    .faq-question {
+      font-size: 1.15rem;
+      padding: 1rem 0.75rem;
+    }
+
+    .faq-icon {
+      font-size: 1.8rem;
+    }
+
+    .faq-answer {
+      font-size: 0.95rem;
+    }
+
+    .developer-credit {
+      font-size: 0.85rem;
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll('.faq-question').forEach(button => {
+    button.addEventListener('click', () => {
+      const isActive = button.classList.contains('active');
+      
+      // Close all
+      document.querySelectorAll('.faq-question.active').forEach(btn => {
+        btn.classList.remove('active');
+        btn.nextElementSibling.style.maxHeight = null;
+      });
+
+      // Toggle current
+      if (!isActive) {
+        button.classList.add('active');
+        const answer = button.nextElementSibling;
+        answer.style.maxHeight = answer.scrollHeight + "px";
+      }
+    });
+  });
+</script>

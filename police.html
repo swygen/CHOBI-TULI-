@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>গোলাকার লোডিং পপ-আপ</title>
+<style>
+  /* পুরো স্ক্রিন জুড়ে ফিক্সড পপ-আপ */
+  #smart-loader-popup {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+
+  /* পপ-আপের ভিতরের কন্টেনার */
+  #smart-loader-container {
+    position: relative;
+    width: 200px;
+    height: 200px;
+  }
+
+  #smart-loader-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%; /* গোলাকার */
+    display: block;
+  }
+
+  /* গোলাকার লোডিং বর্ডার অ্যানিমেশন */
+  #smart-loader-container::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: calc(100% + 20px);
+    height: calc(100% + 20px);
+    border-radius: 50%;
+    border: 5px solid transparent;
+    border-top-color: #007bff;
+    animation: spin 1.5s linear infinite;
+    pointer-events: none;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* ফেড আউট অ্যানিমেশন */
+  .fade-out {
+    animation: fadeOut 1s forwards;
+  }
+  @keyframes fadeOut {
+    to { opacity: 0; visibility: hidden; }
+  }
+</style>
+</head>
+<body>
+
+<div id="smart-loader-popup">
+  <div id="smart-loader-container">
+    <img src="https://i.imgur.com/7L1UxpC.jpeg" alt="লোডিং ছবি" />
+  </div>
+</div>
+
+<script>
+  setTimeout(() => {
+    const popup = document.getElementById('smart-loader-popup');
+    popup.classList.add('fade-out');
+  }, 6000);
+</script>
+
+</body>
+</html>
+<section class="privacy-policy-language-switcher">
+  <div class="lang-buttons">
+    <button id="btn-en" class="active">English</button>
+    <button id="btn-bn">বাংলা</button>
+  </div>
+
+  <div id="content-en" class="lang-content active">
+    <h1>Privacy Policy</h1>
+    <p>At <strong>CHOBI TULI</strong>, your privacy is our priority. We are committed to safeguarding your personal information and being transparent about how we collect, use, and protect it.</p>
+
+    <h2>Information We Collect</h2>
+    <ul>
+      <li><strong>Personal Information:</strong> Details you provide such as your name and email address.</li>
+      <li><strong>Usage Data:</strong> Information about your interactions with our website to improve your experience.</li>
+    </ul>
+
+    <h2>How We Use Your Information</h2>
+    <ul>
+      <li>Deliver and improve our services.</li>
+      <li>Respond to your inquiries and support requests.</li>
+      <li>Send updates and promotional materials (only with your consent).</li>
+    </ul>
+
+    <h2>Cookies</h2>
+    <p>We use cookies to personalize content and analyze traffic. You can disable cookies in your browser settings if you wish.</p>
+
+    <h2>Data Security</h2>
+    <p>We employ robust security measures to protect your information from unauthorized access.</p>
+
+    <h2>Third-Party Services</h2>
+    <p>We may share data with trusted partners who help us operate and improve our services. Please review their privacy policies as well.</p>
+
+    <h2>Policy Updates</h2>
+    <p>Any updates to this policy will be posted here with the effective date.</p>
+
+    <h2>Contact Us</h2>
+    <p>For any questions or concerns regarding your privacy, please contact us at <a href="mailto:contact@chobituli.com">contact@chobituli.com</a>.</p>
+
+    <section class="developer-info">
+      <h3>Developer Info</h3>
+      <p>This website is lovingly crafted by <a href="https://swygen.netlify.app/dashboard" target="_blank" rel="noopener noreferrer">Swygen</a>. <br>Consider this as a gift of friendship and passion for creativity.</p>
+    </section>
+  </div>
+
+  <div id="content-bn" class="lang-content">
+    <h1>গোপনীয়তা নীতি</h1>
+    <p><strong>CHOBI TULI</strong> এ, আপনার গোপনীয়তা আমাদের অগ্রাধিকার। আমরা আপনার ব্যক্তিগত তথ্য সুরক্ষিত রাখতে এবং কিভাবে তা সংগ্রহ, ব্যবহার ও রক্ষা করি সে সম্পর্কে স্বচ্ছ থাকার প্রতিশ্রুতিবদ্ধ।</p>
+
+    <h2>আমরা যে তথ্য সংগ্রহ করি</h2>
+    <ul>
+      <li><strong>ব্যক্তিগত তথ্য:</strong> যেমন আপনার নাম, ইমেইল ঠিকানা ইত্যাদি।</li>
+      <li><strong>ব্যবহার সংক্রান্ত তথ্য:</strong> ওয়েবসাইট ব্যবহারের তথ্য, যা আমাদের সেবা উন্নত করতে সাহায্য করে।</li>
+    </ul>
+
+    <h2>আমরা আপনার তথ্য কিভাবে ব্যবহার করি</h2>
+    <ul>
+      <li>আমাদের সেবা প্রদান এবং উন্নত করার জন্য।</li>
+      <li>আপনার প্রশ্ন এবং সহায়তা অনুরোধের উত্তর দিতে।</li>
+      <li>আপডেট এবং প্রচারমূলক তথ্য পাঠাতে (আপনার সম্মতি ছাড়া নয়)।</li>
+    </ul>
+
+    <h2>কুকিজ</h2>
+    <p>আমরা কুকিজ ব্যবহার করি যাতে কন্টেন্ট ব্যক্তিগতকরণ এবং ট্রাফিক বিশ্লেষণ করা যায়। আপনি চাইলে ব্রাউজার সেটিংস থেকে কুকিজ নিষ্ক্রিয় করতে পারেন।</p>
+
+    <h2>তথ্য নিরাপত্তা</h2>
+    <p>আমরা আপনার তথ্যকে অননুমোদিত প্রবেশ থেকে রক্ষার জন্য শক্তিশালী নিরাপত্তা ব্যবস্থা ব্যবহার করি।</p>
+
+    <h2>তৃতীয় পক্ষের সেবা</h2>
+    <p>আমরা নির্ভরযোগ্য অংশীদারদের সাথে তথ্য শেয়ার করতে পারি যারা আমাদের সেবা পরিচালনা ও উন্নত করতে সাহায্য করে। তাদের গোপনীয়তা নীতিমালা দেখার জন্য আপনাকে উৎসাহিত করি।</p>
+
+    <h2>নীতির আপডেট</h2>
+    <p>এই নীতির যেকোনো পরিবর্তন এখানে আপডেট করা হবে এবং কার্যকর তারিখ জানানো হবে।</p>
+
+    <h2>যোগাযোগ করুন</h2>
+    <p>গোপনীয়তা সম্পর্কিত কোনো প্রশ্ন থাকলে আমাদের ইমেইলে লিখুন: <a href="mailto:contact@chobituli.com">contact@chobituli.com</a>।</p>
+
+    <section class="developer-info">
+      <h3>ডেভেলপার তথ্য</h3>
+      <p>এই ওয়েবসাইটটি <a href="https://swygen.netlify.app/dashboard" target="_blank" rel="noopener noreferrer">Swygen</a> দ্বারা বন্ধুত্বের উপহার হিসেবে স্নেহভরে তৈরি।</p>
+    </section>
+  </div>
+</section>
+
+<style>
+  .privacy-policy-language-switcher {
+    max-width: 720px;
+    margin: 3rem auto;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #f0f7ff 0%, #d9e8ff 100%);
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgb(0 0 0 / 0.1);
+    padding: 2.5rem 2rem 4rem;
+    color: #222;
+    line-height: 1.7;
+  }
+
+  .lang-buttons {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .lang-buttons button {
+    background: #0a3b82;
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    padding: 0.5rem 1.5rem;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    margin: 0 0.5rem;
+    transition: background-color 0.3s ease;
+  }
+
+  .lang-buttons button:hover {
+    background: #ff5722;
+  }
+
+  .lang-buttons button.active {
+    background: #ff5722;
+    box-shadow: 0 4px 12px rgb(255 87 34 / 0.6);
+  }
+
+  .lang-content {
+    display: none;
+  }
+
+  .lang-content.active {
+    display: block;
+  }
+
+  .privacy-policy-language-switcher h1 {
+    font-size: 3rem;
+    text-align: center;
+    font-weight: 900;
+    color: #0a3b82;
+    margin-bottom: 2rem;
+    letter-spacing: 1.2px;
+  }
+
+  .privacy-policy-language-switcher h2,
+  .privacy-policy-language-switcher h3 {
+    color: #0a3b82;
+    font-weight: 700;
+  }
+
+  .privacy-policy-language-switcher h2 {
+    font-size: 1.9rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .privacy-policy-language-switcher h3 {
+    font-size: 1.6rem;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    color: #ff5722;
+    font-weight: 800;
+    text-align: center;
+  }
+
+  .privacy-policy-language-switcher p,
+  .privacy-policy-language-switcher ul {
+    font-size: 1.15rem;
+    color: #444;
+  }
+
+  .privacy-policy-language-switcher ul {
+    list-style-type: square;
+    padding-left: 1.8rem;
+  }
+
+  .privacy-policy-language-switcher ul li {
+    margin-bottom: 0.8rem;
+  }
+
+  .privacy-policy-language-switcher a {
+    color: #0a3b82;
+    font-weight: 700;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .privacy-policy-language-switcher a:hover {
+    color: #ff5722;
+    text-decoration: underline;
+  }
+
+  .developer-info p {
+    font-style: italic;
+    text-align: center;
+    color: #333;
+    max-width: 460px;
+    margin: 0 auto;
+    font-size: 1.1rem;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 768px) {
+    .privacy-policy-language-switcher {
+      padding: 2rem 1rem 3rem;
+      max-width: 90vw;
+    }
+
+    .privacy-policy-language-switcher h1 {
+      font-size: 2.2rem;
+    }
+
+    .privacy-policy-language-switcher h2 {
+      font-size: 1.4rem;
+    }
+
+    .privacy-policy-language-switcher h3 {
+      font-size: 1.3rem;
+    }
+
+    .privacy-policy-language-switcher p,
+    .privacy-policy-language-switcher ul {
+      font-size: 1rem;
+    }
+
+    .lang-buttons button {
+      padding: 0.4rem 1.1rem;
+      font-size: 0.9rem;
+      margin: 0 0.3rem;
+    }
+  }
+</style>
+
+<script>
+  const btnEn = document.getElementById('btn-en');
+  const btnBn = document.getElementById('btn-bn');
+  const contentEn = document.getElementById('content-en');
+  const contentBn = document.getElementById('content-bn');
+
+  btnEn.addEventListener('click', () => {
+    btnEn.classList.add('active');
+    btnBn.classList.remove('active');
+    contentEn.classList.add('active');
+    contentBn.classList.remove('active');
+  });
+
+  btnBn.addEventListener('click', () => {
+    btnBn.classList.add('active');
+    btnEn.classList.remove('active');
+    contentBn.classList.add('active');
+    contentEn.classList.remove('active');
+  });
+</script>

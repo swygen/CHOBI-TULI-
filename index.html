@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>গোলাকার লোডিং পপ-আপ</title>
+<style>
+  /* পুরো স্ক্রিন জুড়ে ফিক্সড পপ-আপ */
+  #smart-loader-popup {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+
+  /* পপ-আপের ভিতরের কন্টেনার */
+  #smart-loader-container {
+    position: relative;
+    width: 200px;
+    height: 200px;
+  }
+
+  #smart-loader-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%; /* গোলাকার */
+    display: block;
+  }
+
+  /* গোলাকার লোডিং বর্ডার অ্যানিমেশন */
+  #smart-loader-container::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: calc(100% + 20px);
+    height: calc(100% + 20px);
+    border-radius: 50%;
+    border: 5px solid transparent;
+    border-top-color: #007bff;
+    animation: spin 1.5s linear infinite;
+    pointer-events: none;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* ফেড আউট অ্যানিমেশন */
+  .fade-out {
+    animation: fadeOut 1s forwards;
+  }
+  @keyframes fadeOut {
+    to { opacity: 0; visibility: hidden; }
+  }
+</style>
+</head>
+<body>
+
+<div id="smart-loader-popup">
+  <div id="smart-loader-container">
+    <img src="https://i.imgur.com/7L1UxpC.jpeg" alt="লোডিং ছবি" />
+  </div>
+</div>
+
+<script>
+  setTimeout(() => {
+    const popup = document.getElementById('smart-loader-popup');
+    popup.classList.add('fade-out');
+  }, 6000);
+</script>
+
+</body>
+</html>
+
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chobi Tuli</title>
+
+  <!-- Google Material Symbols (Premium Icons) -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400;700" rel="stylesheet" />
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f5f5f5;
+      color: #111827;
+    }
+
+    /* HEADER */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 1001;
+      background: linear-gradient(to right, #ffffff, #f0f0f0);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+
+    .left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .brand-name {
+      font-size: 21px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .verified {
+      color: #3b82f6;
+      font-size: 24px;
+    }
+
+    .menu-icon {
+      font-size: 32px;
+      cursor: pointer;
+      color: #111;
+    }
+
+    /* OVERLAY */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100vw;
+      background-color: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(2px);
+      display: none;
+      z-index: 1000;
+      transition: 0.3s ease;
+    }
+
+    .overlay.active {
+      display: block;
+    }
+
+    /* SIDE MENU */
+    .side-menu {
+      position: fixed;
+      top: 0;
+      right: -280px;
+      height: 100vh;
+      width: 260px;
+      background: #ffffff;
+      box-shadow: -4px 0 12px rgba(0,0,0,0.1);
+      z-index: 1002;
+      padding: 20px;
+      transition: right 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .side-menu.active {
+      right: 0;
+    }
+
+    /* Inside Menu Header */
+    .menu-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 25px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 15px;
+    }
+
+    .menu-header img {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+    }
+
+    .menu-header span {
+      font-weight: 600;
+      font-size: 18px;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: #111827;
+      font-size: 16px;
+      padding: 12px 8px;
+      border-radius: 8px;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .menu-item:hover {
+      background-color: #f0f4ff;
+      color: #2563eb;
+    }
+
+    .material-symbols-outlined {
+      font-size: 22px;
+      margin-right: 12px;
+      color: #2563eb;
+    }
+
+    /* Content */
+    .content {
+      padding: 20px;
+      height: 2000px;
+    }
+
+    @media (max-width: 600px) {
+      .brand-name {
+        font-size: 18px;
+      }
+
+      .menu-icon {
+        font-size: 28px;
+      }
+
+      .side-menu {
+        width: 230px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sticky Header -->
+  <div class="header">
+    <div class="left">
+      <img src="https://i.postimg.cc/DmkhR1CB/20250602-153823.png" class="logo" alt="Chobi Tuli Logo">
+      <span class="brand-name">Chobi Tuli</span>
+      <span class="material-symbols-outlined verified">verified</span>
+    </div>
+    <span class="material-symbols-outlined menu-icon" onclick="toggleMenu()">menu</span>
+  </div>
+
+  <!-- Dark Overlay -->
+  <div id="overlay" class="overlay" onclick="toggleMenu()"></div>
+
+  <!-- Slide Side Menu -->
+  <div id="sideMenu" class="side-menu">
+    <div class="menu-header">
+      <img src="https://i.postimg.cc/DmkhR1CB/20250602-153823.png" alt="Menu Logo">
+      <span>Chobi Tuli</span>
+    </div>
+    <a href="https://example.com/faq" class="menu-item">
+      <span class="material-symbols-outlined">help</span> FAQ
+    </a>
+    <a href="https://example.com/privacy" class="menu-item">
+      <span class="material-symbols-outlined">lock</span> Privacy Policy
+    </a>
+    <a href="https://example.com/contact" class="menu-item">
+      <span class="material-symbols-outlined">call</span> Developer Contact
+    </a>
+  </div>
+
+  
+
+  <!-- JavaScript -->
+  <script>
+    function toggleMenu() {
+      document.getElementById("sideMenu").classList.toggle("active");
+      document.getElementById("overlay").classList.toggle("active");
+    }
+  </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Message Card</title>
+
+  <!-- Google Fonts & Material Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #ece9e6, #ffffff);
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .message-card {
+      max-width: 400px;
+      margin: 40px auto;
+      padding: 20px 25px;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 20px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+      backdrop-filter: blur(12px);
+      display: flex;
+      align-items: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .message-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.15);
+    }
+
+    .message-icon {
+      font-size: 36px;
+      margin-right: 20px;
+      background: linear-gradient(45deg, #00796b, #00bfa5);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .message-text {
+      font-size: 1.1rem;
+      color: #1a1a1a;
+      font-weight: 500;
+    }
+
+    @media (max-width: 500px) {
+      .message-card {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .message-icon {
+        margin: 0 0 12px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="message-card">
+    <span class="material-icons message-icon">photo_camera</span>
+    <div class="message-text">Some moments are captured by the camera.</div>
+  </div>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MB Bazar Feed</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #f0f2f5;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .feed {
+      max-width: 480px;
+      margin: auto;
+      padding: 15px;
+    }
+    .post {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+      position: relative;
+    }
+    .post-header {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+    }
+    .post-header img.logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+    .post-header .info {
+      flex-grow: 1;
+    }
+    .post-header .name {
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+    }
+    .post-header .verified {
+      width: 16px;
+      height: 16px;
+      margin-left: 5px;
+    }
+    .post-header .time {
+      font-size: 12px;
+      color: gray;
+    }
+    .post-img {
+      position: relative;
+    }
+    .post-img img {
+      width: 100%;
+      display: block;
+    }
+    .caption-overlay {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      padding: 10px;
+      font-size: 15px;
+    }
+    .post-actions {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 10px;
+      border-top: 1px solid #eee;
+    }
+    .post-actions .action {
+      text-align: center;
+      position: relative;
+    }
+    .post-actions img {
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+    }
+    .counts {
+      font-size: 13px;
+      color: #333;
+      margin-top: 4px;
+    }
+    .reactions-popup {
+      position: absolute;
+      bottom: 50px;
+      left: 0;
+      right: 0;
+      margin: auto;
+      display: flex;
+      gap: 5px;
+      background: white;
+      padding: 6px 10px;
+      border-radius: 30px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.15);
+      z-index: 10;
+      justify-content: center;
+      user-select: none;
+    }
+    .reactions-popup img {
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+      transition: transform 0.15s ease;
+    }
+    .reactions-popup img:hover {
+      transform: scale(1.3);
+    }
+  </style>
+</head>
+<body>
+  <div class="feed" id="feed"></div>
+
+  <script type="module">
+  (function() {
+    // Import Firebase modules dynamically
+    const firebaseConfig = {
+      apiKey: "AIzaSyChZH6yY3nCIV-CXyQr0aTomBxy_V4HnKM",
+      authDomain: "mbbazar-bd.firebaseapp.com",
+      projectId: "mbbazar-bd",
+      storageBucket: "mbbazar-bd.appspot.com",
+      messagingSenderId: "528931661008",
+      appId: "1:528931661008:web:a0b60c31465619b6906ad5",
+      measurementId: "G-6X66JBN082"
+    };
+
+    import("https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js").then(({ initializeApp }) => {
+      import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js").then(firestore => {
+        const { getFirestore, collection, getDocs, query, orderBy, doc, updateDoc } = firestore;
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        const feed = document.getElementById("feed");
+        const logoUrl = "https://i.postimg.cc/9fxtfgDQ/20250602-153823.png";
+        const verifyIcon = "https://i.postimg.cc/fbwNChTN/verify.png";
+        const icons = {
+          like: "https://i.postimg.cc/wTCxhPmq/facebook-reactions.png",
+          love: "https://i.postimg.cc/Fz1FZXpR/heart.png",
+          care: "https://i.postimg.cc/GtZRx897/care.png",
+          wow: "https://i.postimg.cc/FKm96Lpw/wow.png",
+          comment: "https://i.postimg.cc/x1VYkzwq/comment.png",
+          share: "https://i.postimg.cc/KzWhmk7G/share.png"
+        };
+
+        // Format number to K, M style
+        function formatCount(num) {
+          if (num >= 1000000) {
+            return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
+          }
+          if (num >= 1000) {
+            return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'K';
+          }
+          return num.toString();
+        }
+
+        async function loadPosts() {
+          feed.innerHTML = ''; // Clear existing posts
+          const q = query(collection(db, "posts"), orderBy("createdAt", "desc"));
+          const snapshot = await getDocs(q);
+
+          snapshot.forEach(docSnap => {
+            const post = docSnap.data();
+            const id = docSnap.id;
+
+            const postDiv = document.createElement("div");
+            postDiv.className = "post";
+
+            postDiv.innerHTML = `
+              <div class="post-header">
+                <img class="logo" src="${logoUrl}" />
+                <div class="info">
+                  <div class="name">Chobi Tuli <img class="verified" src="${verifyIcon}" /></div>
+                  <div class="time">${new Date(post.createdAt).toLocaleString()}</div>
+                </div>
+              </div>
+              <div class="post-img">
+                <img src="${post.image}" alt="Post Image"/>
+                <div class="caption-overlay">${post.caption}</div>
+              </div>
+              <div class="post-actions">
+                <div class="action">
+                  <img src="${post.reactionIcon || icons.like}" style="max-width:32px; max-height:32px;" data-id="${id}" class="reaction-main-icon" />
+                  <div class="counts">${formatCount(post.reactions || 0)} Like</div>
+                </div>
+                <div class="action">
+                  <img src="${icons.comment}" />
+                  <div class="counts">${formatCount(post.comments || 0)} Comment</div>
+                </div>
+                <div class="action">
+                  <img src="${icons.share}" data-img="${post.image}" class="share-icon" />
+                  <div class="counts">${formatCount(post.shares || 0)} Share</div>
+                </div>
+              </div>
+              <div class="reactions-popup" id="popup-${id}" style="display: none;">
+                <img src="${icons.like}" data-id="${id}" data-icon="${icons.like}" class="reaction-icon" />
+                <img src="${icons.love}" data-id="${id}" data-icon="${icons.love}" class="reaction-icon" />
+                <img src="${icons.care}" data-id="${id}" data-icon="${icons.care}" class="reaction-icon" />
+                <img src="${icons.wow}" data-id="${id}" data-icon="${icons.wow}" class="reaction-icon" />
+              </div>
+            `;
+
+            feed.appendChild(postDiv);
+          });
+
+          // Add event listeners after posts loaded
+          addEventListeners();
+        }
+
+        function addEventListeners() {
+          // Reaction main icon click -> toggle popup
+          document.querySelectorAll(".reaction-main-icon").forEach(img => {
+            img.addEventListener("click", e => {
+              const id = e.currentTarget.dataset.id;
+              document.querySelectorAll(".reactions-popup").forEach(p => p.style.display = "none");
+              const popup = document.getElementById("popup-" + id);
+              if (popup) {
+                popup.style.display = "flex";
+              }
+            });
+          });
+
+          // Reaction icon click inside popup -> update icon only
+          document.querySelectorAll(".reaction-icon").forEach(img => {
+            img.addEventListener("click", async e => {
+              const id = e.currentTarget.dataset.id;
+              const icon = e.currentTarget.dataset.icon;
+              try {
+                const postRef = doc(db, "posts", id);
+                // Only update reactionIcon field, do not change reaction count
+                await updateDoc(postRef, { reactionIcon: icon });
+                // Hide popup
+                const popup = document.getElementById("popup-" + id);
+                if (popup) popup.style.display = "none";
+                // Update the main icon immediately on UI without reload
+                const mainIcon = document.querySelector(`.reaction-main-icon[data-id="${id}"]`);
+                if (mainIcon) mainIcon.src = icon;
+              } catch(err) {
+                alert("Error updating reaction: " + err.message);
+              }
+            });
+          });
+
+          // Click outside popup closes all popups
+          document.body.addEventListener("click", e => {
+            if (!e.target.classList.contains("reaction-main-icon") && !e.target.classList.contains("reaction-icon")) {
+              document.querySelectorAll(".reactions-popup").forEach(p => p.style.display = "none");
+            }
+          });
+
+          // Share icon click
+          document.querySelectorAll(".share-icon").forEach(img => {
+            img.addEventListener("click", e => {
+              const imgUrl = e.currentTarget.dataset.img;
+              const shareText = `Check this out: ${imgUrl}`;
+              if (navigator.share) {
+                navigator.share({
+                  title: 'MB Bazar Post',
+                  text: 'Check this awesome post!',
+                  url: imgUrl
+                }).catch(() => {
+                  alert("Sharing failed or cancelled.");
+                });
+              } else {
+                navigator.clipboard.writeText(shareText).then(() => {
+                  alert("Link copied to clipboard! Share it anywhere.");
+                });
+              }
+            });
+          });
+        }
+
+        loadPosts();
+
+      });
+    });
+  })();
+  </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Photo Upload Form</title>
+<style>
+  /* Namespace style, যাতে অন্য কোডের সাথে কনফ্লিক্ট না হয় */
+  #uploadWidget {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    max-width: 420px;
+    margin: 30px auto;
+    padding: 20px;
+    background: rgba(255 255 255 / 0.85);
+    border-radius: 10px;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+    backdrop-filter: blur(8px);
+    position: relative;
+  }
+  #uploadWidget h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+    font-weight: 600;
+  }
+  #uploadWidget button#showFormBtn {
+    display: block;
+    margin: 0 auto 25px auto;
+    padding: 12px 25px;
+    font-size: 1.1rem;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  #uploadWidget button#showFormBtn:hover {
+    background: #0056b3;
+  }
+  form#uploadForm {
+    display: none;
+    flex-direction: column;
+  }
+  form#uploadForm label {
+    margin-bottom: 6px;
+    font-weight: 500;
+    color: #444;
+  }
+  form#uploadForm input[type="text"],
+  form#uploadForm input[type="tel"],
+  form#uploadForm textarea,
+  form#uploadForm input[type="file"] {
+    width: 100%;
+    padding: 10px 12px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    border: 1.8px solid #ccc;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+  }
+  form#uploadForm input[type="text"]:focus,
+  form#uploadForm input[type="tel"]:focus,
+  form#uploadForm textarea:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  form#uploadForm textarea {
+    resize: vertical;
+    min-height: 70px;
+  }
+  form#uploadForm button[type="submit"] {
+    padding: 12px 20px;
+    font-size: 1.1rem;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  form#uploadForm button[type="submit"]:hover {
+    background: #1e7e34;
+  }
+  #uploadWidget .message {
+    text-align: center;
+    font-weight: 600;
+    color: #155724;
+    background-color: #d4edda;
+    border: 1.5px solid #c3e6cb;
+    padding: 12px 18px;
+    margin-top: 20px;
+    border-radius: 8px;
+  }
+
+  /* Responsive */
+  @media (max-width: 480px) {
+    #uploadWidget {
+      margin: 15px;
+      padding: 15px;
+    }
+    #uploadWidget h2 {
+      font-size: 1.2rem;
+    }
+    form#uploadForm button[type="submit"],
+    #uploadWidget button#showFormBtn {
+      font-size: 1rem;
+      padding: 10px 18px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div id="uploadWidget">
+  <h2>You can upload your photo to our site.</h2>
+  <button id="showFormBtn">Go To upload</button>
+
+  <form id="uploadForm">
+    <label for="name">নাম <span style="color:red">*</span></label>
+    <input type="text" id="name" name="name" required placeholder="আপনার নাম লিখুন" />
+
+    <label for="whatsapp">Whatsapp নম্বর <span style="color:red">*</span></label>
+    <input type="tel" id="whatsapp" name="whatsapp" required placeholder="Whatsapp নম্বর" pattern="[0-9+ ]{7,15}" />
+
+    <label for="caption">ছবির ক্যাপশন (Optional)</label>
+    <textarea id="caption" name="caption" placeholder="কিছু ক্যাপশন লিখতে পারেন..."></textarea>
+
+    <label for="photo">ছবি আপলোড <span style="color:red">*</span></label>
+    <input type="file" id="photo" name="photo" accept="image/*" required />
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <div class="message" id="responseMessage" style="display:none;"></div>
+</div>
+
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+
+<script>
+  (function() {
+    // Firebase configuration (আপনার দেওয়া)
+    const firebaseConfig = {
+      apiKey: "AIzaSyChZH6yY3nCIV-CXyQr0aTomBxy_V4HnKM",
+      authDomain: "mbbazar-bd.firebaseapp.com",
+      projectId: "mbbazar-bd",
+      storageBucket: "mbbazar-bd.firebasestorage.app",
+      messagingSenderId: "528931661008",
+      appId: "1:528931661008:web:a0b60c31465619b6906ad5",
+      measurementId: "G-6X66JBN082"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // DOM elements
+    const showFormBtn = document.getElementById("showFormBtn");
+    const uploadForm = document.getElementById("uploadForm");
+    const responseMessage = document.getElementById("responseMessage");
+    const photoInput = document.getElementById("photo");
+
+    // imgbb API key - তোমার এখানে বসাও!
+    const imgbbApiKey = "3305fbf17e54a31c5ee46795eed61dd0";
+
+    showFormBtn.addEventListener("click", () => {
+      uploadForm.style.display = uploadForm.style.display === "flex" ? "none" : "flex";
+      uploadForm.style.flexDirection = "column";
+      responseMessage.style.display = "none";
+    });
+
+    uploadForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      responseMessage.style.display = "none";
+      responseMessage.textContent = "";
+
+      // Validate image selected
+      if (!photoInput.files || photoInput.files.length === 0) {
+        alert("অনুগ্রহ করে ছবি আপলোড করুন!");
+        return;
+      }
+
+      const name = uploadForm.name.value.trim();
+      const whatsapp = uploadForm.whatsapp.value.trim();
+      const caption = uploadForm.caption.value.trim();
+      const imageFile = photoInput.files[0];
+
+      // Basic validation
+      if (!name || !whatsapp) {
+        alert("নাম এবং Whatsapp নম্বর দিতে হবে!");
+        return;
+      }
+
+      showFormBtn.disabled = true;
+      uploadForm.querySelector("button[type=submit]").disabled = true;
+      showFormBtn.textContent = "Uploading...";
+
+      try {
+        // Step 1: Upload image to imgbb
+        const imageBase64 = await toBase64(imageFile);
+        const formData = new FormData();
+        formData.append("key", imgbbApiKey);
+        formData.append("image", imageBase64.split(",")[1]);
+
+        const imgbbResponse = await fetch("https://api.imgbb.com/1/upload", {
+          method: "POST",
+          body: formData
+        });
+
+        const imgbbData = await imgbbResponse.json();
+
+        if (!imgbbData.success) {
+          throw new Error("Image upload failed!");
+        }
+
+        const imageUrl = imgbbData.data.url;
+
+        // Step 2: Save data to Firestore
+        await db.collection("uploads").add({
+          name,
+          whatsapp,
+          caption: caption || null,
+          imageUrl,
+          timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        // Show success message
+        responseMessage.textContent = "ধন্যবাদ! আপনার ছবি ও তথ্য সফল ভাবে জমা হয়েছে! আমরা দ্রুত আমাদের সাইটে আপনার ছবি আপলোড করবো ততক্ষণ পর্যন্ত অপেক্ষা করুন এবং আমাদের Chobi Tuli ওয়েবসাইটের সাথে থাকুন!";
+        responseMessage.style.display = "block";
+
+        // Reset form
+        uploadForm.reset();
+        uploadForm.style.display = "none";
+
+      } catch (err) {
+        alert("সমস্যা হয়েছে: " + err.message);
+      } finally {
+        showFormBtn.disabled = false;
+        uploadForm.querySelector("button[type=submit]").disabled = false;
+        showFormBtn.textContent = "Go To upload";
+      }
+    });
+
+    // Helper: convert file to base64
+    function toBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>রঙিন প্রিমিয়াম বার্তা</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+<style>
+  .premium-msg-wrapper-x99 {
+    height: 100vh;
+    width: 100vw;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10px;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .premium-msg-x99 {
+    background-color: transparent;
+    max-width: 320px;
+    padding: 12px 18px;
+    border-radius: 14px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #2e2e2e;
+    user-select: none;
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  .premium-msg-x99 .icon-main {
+    font-size: 54px;
+    color: #d6336c;
+    margin-bottom: 10px;
+  }
+
+  .premium-msg-x99 h2 {
+    font-weight: 700;
+    font-size: 24px;
+    margin: 0 0 12px 0;
+    background: linear-gradient(90deg, #d6336c, #f06, #d6336c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .premium-msg-x99 p {
+    font-weight: 500;
+    font-size: 16px;
+    margin: 6px 0;
+  }
+
+  /* রঙিন স্প্যান টেক্সটের জন্য */
+  .premium-msg-x99 p span.colorful {
+    background: linear-gradient(90deg, #ff416c, #ff4b2b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 600;
+  }
+
+  .premium-msg-x99 .icon-set {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    margin-top: 16px;
+    color: #999;
+  }
+
+  .premium-msg-x99 .icon-set i {
+    font-size: 26px;
+    transition: color 0.25s ease;
+  }
+
+  .premium-msg-x99 .icon-set i:hover {
+    color: #d6336c;
+    cursor: default;
+  }
+
+  @media (max-width: 380px) {
+    .premium-msg-x99 {
+      max-width: 95vw;
+      padding: 10px 14px;
+    }
+    .premium-msg-x99 h2 {
+      font-size: 22px;
+    }
+    .premium-msg-x99 p {
+      font-size: 15px;
+    }
+    .premium-msg-x99 .icon-main {
+      font-size: 48px;
+      margin-bottom: 8px;
+    }
+    .premium-msg-x99 .icon-set i {
+      font-size: 22px;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="premium-msg-wrapper-x99" role="main" aria-label="ছবি প্রেমিকদের রঙিন বার্তা">
+    <section class="premium-msg-x99">
+      <i class="bi bi-camera2 icon-main" aria-hidden="true"></i>
+      <h2>ছবি: <span class="colorful">হৃদয়ের ভাষা</span></h2>
+      <p>এক ক্লিকে <span class="colorful">জীবন জমে ওঠে স্মৃতিতে</span>।</p>
+      <p>প্রতিটি ছবি একটি <span class="colorful">গল্প বলে</span>, একটি অনুভব ছড়ায়।</p>
+      <p>ছবি প্রেমিকদের জন্য, যা <span class="colorful">শুধুই ছবি নয়</span> — বরং জীবনানন্দ।</p>
+      <p>আলোর খেলা, ছায়ার ছোঁয়া, আর মুহূর্তের রং — একসাথে ফুটে উঠে <span class="colorful">ছবিতে</span>।</p>
+
+      <div class="icon-set" aria-hidden="true">
+        <i class="bi bi-heart-fill"></i>
+        <i class="bi bi-image"></i>
+        <i class="bi bi-brush"></i>
+        <i class="bi bi-stars"></i>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Professional Profile Card</title>
+<style>
+  .myprofile-card {
+    background: transparent;
+    max-width: 320px;
+    margin: 40px auto;
+    padding: 0 15px;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #222;
+    box-sizing: border-box;
+  }
+
+  /* প্রোফাইল ছবি: উপরের অংশে, সেন্টারে */
+  .myprofile-card__photo {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    border: 3px solid #4a90e2;
+    box-shadow: 0 4px 15px rgba(74,144,226,0.6);
+    object-fit: cover;
+    margin: 0 auto;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+  .myprofile-card__photo:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(74,144,226,0.8);
+  }
+
+  /* নাম + verified icon এক লাইনে, সেন্টার */
+  .myprofile-card__name-verified {
+    margin-top: 20px;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #111;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  .myprofile-card__verified-icon {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+  }
+
+  /* পদবি */
+  .myprofile-card__designation {
+    margin-top: 6px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #555;
+  }
+
+  /* সোশ্যাল আইকন কন্টেইনার: নিচে, সেন্টার */
+  .myprofile-card__social {
+    margin-top: 22px;
+    display: flex;
+    justify-content: center;
+    gap: 28px;
+  }
+  /* সোশ্যাল আইকন লিঙ্ক */
+  .myprofile-card__social-link {
+    display: inline-block;
+    transition: transform 0.3s ease, filter 0.3s ease;
+  }
+  .myprofile-card__social-link:hover {
+    transform: scale(1.2);
+    filter: brightness(1.3);
+  }
+  /* সোশ্যাল আইকন ইমেজ */
+  .myprofile-card__social-icon {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+  }
+
+  /* মোবাইল রেস্পন্সিভ */
+  @media (max-width: 400px) {
+    .myprofile-card {
+      max-width: 90vw;
+    }
+    .myprofile-card__photo {
+      width: 130px;
+      height: 130px;
+    }
+    .myprofile-card__name-verified {
+      font-size: 1.3rem;
+    }
+    .myprofile-card__designation {
+      font-size: 1rem;
+    }
+    .myprofile-card__social-icon {
+      width: 24px;
+      height: 24px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="myprofile-card" role="region" aria-label="User Profile Card">
+  <!-- প্রোফাইল ছবি -->
+  <img
+    class="myprofile-card__photo"
+    src="https://i.postimg.cc/hvTVzs9x/FB-IMG-1749026200821.jpg"
+    alt="NA S IF"
+    loading="lazy"
+  />
+
+  <!-- নাম এবং verified আইকন -->
+  <div class="myprofile-card__name-verified">
+    NA S IF
+    <img
+      src="https://i.imgur.com/6l3VK4w.png"
+      alt="Verified Icon"
+      class="myprofile-card__verified-icon"
+    />
+  </div>
+
+  <!-- পদবি -->
+  <div class="myprofile-card__designation">CEO Of Chobi Tuli</div>
+
+  <!-- সোশ্যাল মিডিয়া আইকন -->
+  <div class="myprofile-card__social" aria-label="Social Media Links">
+    <a
+      href="https://www.facebook.com/yourprofile"
+      target="_blank"
+      rel="noopener"
+      aria-label="Facebook"
+      class="myprofile-card__social-link"
+    >
+      <img
+        src="https://i.imgur.com/TjUtwri.png"
+        alt="Facebook Icon"
+        class="myprofile-card__social-icon"
+      />
+    </a>
+    <a
+      href="https://www.instagram.com/yourprofile"
+      target="_blank"
+      rel="noopener"
+      aria-label="Instagram"
+      class="myprofile-card__social-link"
+    >
+      <img
+        src="https://i.imgur.com/BxWRVte.png"
+        alt="Instagram Icon"
+        class="myprofile-card__social-icon"
+      />
+    </a>
+    <a
+      href="https://twitter.com/yourprofile"
+      target="_blank"
+      rel="noopener"
+      aria-label="Twitter"
+      class="myprofile-card__social-link"
+    >
+      <img
+        src="https://i.imgur.com/aFgJodh.png"
+        alt="Twitter Icon"
+        class="myprofile-card__social-icon"
+      />
+    </a>
+    <a
+      href="https://wa.me/yourphonenumber"
+      target="_blank"
+      rel="noopener"
+      aria-label="WhatsApp"
+      class="myprofile-card__social-link"
+    >
+      <img
+        src="https://i.imgur.com/LVM0JiY.png"
+        alt="WhatsApp Icon"
+        class="myprofile-card__social-icon"
+      />
+    </a>
+  </div>
+</div>
+
+</body>
+</html>
+<br>
+<br>
+<br>
+
+<!-- Premium Transparent Black Text Footer -->
+<style>
+  .premium-footer-black {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(255 255 255 / 0); /* ট্রান্সপারেন্ট */
+    color: #121212; /* ডার্ক কালো */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    text-align: center;
+    padding: 14px 24px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    box-shadow: 0 -3px 18px rgba(0, 0, 0, 0.12);
+    z-index: 9999;
+    border-radius: 12px 12px 0 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .premium-footer-black a {
+    color: #1a73e8; /* Google Blue */
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.35s ease;
+  }
+
+  .premium-footer-black a:hover,
+  .premium-footer-black a:focus {
+    color: #0c47b7;
+    text-decoration: underline;
+  }
+
+  .material-icons {
+    font-size: 22px;
+    vertical-align: middle;
+  }
+
+  @media (max-width: 480px) {
+    .premium-footer-black {
+      font-size: 14px;
+      padding: 12px 16px;
+      gap: 6px;
+      flex-direction: column;
+    }
+  }
+</style>
+
+<!-- Google Material Icons CDN -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<footer class="premium-footer-black" role="contentinfo" aria-label="Site footer">
+  <div>
+    CHOBI TULI | ALL RIGHT RESORBED 2025 | DEVELOPER BY 
+    <a href="https://swygen.netlify.app/dashboard.html" target="_blank" rel="noopener noreferrer" aria-label="Visit Swygen Developer Website">
+      Swygen
+      <span class="material-icons" aria-hidden="true">launch</span>
+    </a>
+  </div>
+</footer>
