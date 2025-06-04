@@ -287,6 +287,231 @@
   </script>
 </body>
 </html>
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ChobiTuli Stories</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', sans-serif; background: #f7f7f7; }
+    .story-container {
+      display: flex;
+      overflow-x: auto;
+      padding: 10px;
+      gap: 10px;
+      background: #fff;
+    }
+    .story {
+      flex: 0 0 auto;
+      width: 90px;
+      height: 150px;
+      border-radius: 12px;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      border: 2px solid #e1e1e1;
+      background: #000;
+      transition: transform 0.2s;
+    }
+    .story:hover {
+      transform: scale(1.03);
+    }
+    .story img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .story span {
+      display: block;
+      text-align: center;
+      padding: 4px;
+      font-size: 13px;
+      background: #fff;
+      color: #333;
+    }.viewer {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.95);
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.viewer img {
+  max-width: 100%;
+  max-height: 80vh;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 30px;
+  height: 30px;
+  background-image: url('https://cdn-icons-png.flaticon.com/512/1828/1828778.png');
+  background-size: cover;
+  cursor: pointer;
+}
+
+.viewer-header {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: white;
+}
+.viewer-header img {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+}
+.viewer-header .name {
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.viewer-header .name img {
+  width: 15px;
+  height: 15px;
+}
+
+.view-count {
+  color: #ccc;
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: center;
+  font-weight: 500;
+  animation: fadeIn 0.5s ease;
+}
+
+.reactions {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+}
+.reactions img {
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+.reactions img:hover {
+  transform: scale(1.2);
+}
+
+.reaction-fly {
+  position: fixed;
+  animation: flyUp 1s forwards;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+@keyframes flyUp {
+  0% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-100px); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+  </style>
+</head>
+<body>  <div class="story-container" id="storyContainer"></div>  <div class="viewer" id="storyViewer">
+    <div class="close-btn" onclick="closeViewer()"></div>
+    <div class="viewer-header">
+      <img src="https://i.postimg.cc/Hnx14P5b/20250602-153823.png" alt="Logo" />
+      <div class="name">CHOBI TULI <img src="https://cdn-icons-png.flaticon.com/512/1828/1828640.png" alt="Verified" /></div>
+    </div>
+    <img id="viewerImg" src="" alt="Story" />
+    <div class="view-count" id="viewCountText"></div>
+    <div class="reactions">
+      <img src="https://i.postimg.cc/wTCxhPmq/facebook-reactions.png" onclick="reactToStory('like', this)" />
+      <img src="https://i.postimg.cc/Fz1FZXpR/heart.png" onclick="reactToStory('love', this)" />
+      <img src="https://i.postimg.cc/GtZRx897/care.png" onclick="reactToStory('care', this)" />
+      <img src="https://i.postimg.cc/FKm96Lpw/wow.png" onclick="reactToStory('wow', this)" />
+    </div>
+  </div>  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyChZH6yY3nCIV-CXyQr0aTomBxy_V4HnKM",
+      authDomain: "mbbazar-bd.firebaseapp.com",
+      projectId: "mbbazar-bd",
+      storageBucket: "mbbazar-bd.firebasestorage.app",
+      messagingSenderId: "528931661008",
+      appId: "1:528931661008:web:a0b60c31465619b6906ad5",
+      measurementId: "G-6X66JBN082"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    const storyContainer = document.getElementById('storyContainer');
+    const viewer = document.getElementById('storyViewer');
+    const viewerImg = document.getElementById('viewerImg');
+    const viewCountText = document.getElementById('viewCountText');
+
+    let currentStoryId = null;
+
+    function formatCount(count) {
+      if (count >= 1000000) return (count / 1000000).toFixed(1) + 'M';
+      if (count >= 1000) return (count / 1000).toFixed(1) + 'K';
+      return count;
+    }
+
+    function openViewer(storyId, imgUrl, views) {
+      viewer.style.display = 'flex';
+      viewerImg.src = imgUrl;
+      viewCountText.textContent = formatCount(views) + ' views';
+      currentStoryId = storyId;
+      db.collection("stories").doc(storyId).update({
+        views: firebase.firestore.FieldValue.increment(1)
+      });
+    }
+
+    function closeViewer() {
+      viewer.style.display = 'none';
+      viewerImg.src = '';
+      currentStoryId = null;
+    }
+
+    function reactToStory(type, el) {
+      if (!currentStoryId) return;
+      const storyRef = db.collection("stories").doc(currentStoryId);
+      storyRef.update({ [type]: firebase.firestore.FieldValue.increment(1) });
+      const flyIcon = el.cloneNode(true);
+      const rect = el.getBoundingClientRect();
+      flyIcon.className = 'reaction-fly';
+      flyIcon.style.left = rect.left + 'px';
+      flyIcon.style.top = rect.top + 'px';
+      document.body.appendChild(flyIcon);
+      setTimeout(() => flyIcon.remove(), 1000);
+    }
+
+    function loadStories() {
+      db.collection("stories").orderBy("timestamp", "desc").onSnapshot(snapshot => {
+        storyContainer.innerHTML = "";
+        snapshot.forEach(doc => {
+          const data = doc.data();
+          const story = document.createElement('div');
+          story.className = "story";
+          story.innerHTML = `<img src="${data.imageUrl}" alt="Story"/><span>${data.title || ''}</span>`;
+          story.addEventListener('click', () => openViewer(doc.id, data.imageUrl, data.views || 0));
+          storyContainer.appendChild(story);
+        });
+      });
+    }
+
+    loadStories();
+  </script></body>
+</html>
 <!DOCTYPE html>
 <html lang="en">
 <head>
